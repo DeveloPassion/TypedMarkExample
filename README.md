@@ -16,3 +16,6 @@ it must produce a self-contained working collection that:
 The system intentionally has no `.typedmark/history.md`. An attempted automatic
 upgrade from an earlier version therefore requires manual classification instead
 of guessing migration operations.
+
+See the [0.1.0 exercise record](evidence/0.1.0.md) for the exact revisions and
+observed validation outcomes.
