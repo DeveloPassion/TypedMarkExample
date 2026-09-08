@@ -1,0 +1,58 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  system-exercise:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out example system
+        uses: actions/checkout@v4
+        with:
+          path: TypedMarkExample
+
+      - name: Check out reference tooling
+        uses: actions/checkout@v4
+        with:
+          repository: DeveloPassion/TypedMark
+          ref: 244d1bf13a4f3daed31d32ee1945f9f356e1b3a3
+          path: TypedMark
+
+      - name: Check out specification evidence baseline
+        uses: actions/checkout@v4
+        with:
+          repository: DeveloPassion/TypedMarkSpecification
+          ref: 155d668d46c2912244d345fa5ff417a71bac07ac
+          path: TypedMarkSpecification
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.3.14
+
+      - name: Install locked tooling dependencies
+        working-directory: TypedMark
+        run: bun install --frozen-lockfile
+
+      - name: Validate the system definition
+        working-directory: TypedMarkExample
+        run: bun ../TypedMark/src/cli.ts validate . --schemas ../TypedMarkSpecification/schema/json-schema --mode system_definition
+
+      - name: Instantiate and validate offline
+        working-directory: TypedMarkExample
+        run: |
+          bun ../TypedMark/src/cli.ts instantiate . .tmp/ci-instance --name ci-working-notes --schemas ../TypedMarkSpecification/schema/json-schema
+          bun ../TypedMark/src/cli.ts validate .tmp/ci-instance --schemas ../TypedMarkSpecification/schema/json-schema --mode instantiated_collection
+
+      - name: Require manual resolution without history
+        working-directory: TypedMarkExample
+        run: |
+          if bun ../TypedMark/src/cli.ts migration-readiness . --from 0.0.1 --schemas ../TypedMarkSpecification/schema/json-schema; then
+            echo "Expected migration readiness to require manual resolution"
+            exit 1
+          fi
