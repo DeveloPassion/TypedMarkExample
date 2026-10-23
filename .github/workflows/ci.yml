@@ -46,8 +46,9 @@ jobs:
       - name: Instantiate and validate offline
         working-directory: TypedMarkExample
         run: |
-          bun ../TypedMark/src/cli.ts instantiate . .tmp/ci-instance --name ci-working-notes --schemas ../TypedMarkSpecification/schema/json-schema
-          bun ../TypedMark/src/cli.ts validate .tmp/ci-instance --schemas ../TypedMarkSpecification/schema/json-schema --mode instantiated_collection
+          # The importer refuses targets inside the source system.
+          bun ../TypedMark/src/cli.ts instantiate . "$RUNNER_TEMP/ci-instance" --name ci-working-notes --schemas ../TypedMarkSpecification/schema/json-schema
+          bun ../TypedMark/src/cli.ts validate "$RUNNER_TEMP/ci-instance" --schemas ../TypedMarkSpecification/schema/json-schema --mode instantiated_collection
 
       - name: Require manual resolution without history
         working-directory: TypedMarkExample
