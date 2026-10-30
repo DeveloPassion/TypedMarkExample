@@ -3,10 +3,11 @@
 A minimal publishable TypedMark `0.1.0` system used to exercise the reference
 tooling in [DeveloPassion/TypedMark](https://github.com/DeveloPassion/TypedMark).
 
-The system defines one `note` type and one scaffolded welcome note. Instantiating
-it must produce a self-contained working collection that:
+The system defines one `note` type, one scaffolded welcome note, and one saved
+view, `notes`, a table of every note by title. Instantiating it must produce a
+self-contained working collection that:
 
-- retains the system's schemas and templates;
+- retains the system's schemas, templates, and saved view;
 - records `@developassion/typedmark-example` version `0.1.0` as composition
   provenance;
 - uses a caller-supplied collection identity;

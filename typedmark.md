@@ -1,7 +1,9 @@
 ---
 specification_version: 0.1.0
 extensions:
+  typedmark:queries: 0.1.0
   typedmark:systems: 0.1.0
+  typedmark:views: 0.1.0
 name: "@developassion/typedmark-example"
 label: TypedMark Example
 description: Minimal reusable TypedMark system for conformance exercises.

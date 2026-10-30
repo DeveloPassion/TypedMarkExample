@@ -21,14 +21,14 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: DeveloPassion/TypedMark
-          ref: a1146489d276d5dc3769e07c536a8dce39e7a0e3
+          ref: 63277e0f86c49fc54e13425b0b6add5b4d71342f
           path: TypedMark
 
       - name: Check out specification evidence baseline
         uses: actions/checkout@v4
         with:
           repository: DeveloPassion/TypedMarkSpecification
-          ref: 68736a657582e9314af4b5a2c7ad3e8180c3741e
+          ref: a386e1de0d5730845a5f6836f75402bb6f9883df
           path: TypedMarkSpecification
 
       - uses: oven-sh/setup-bun@v2
@@ -49,6 +49,10 @@ jobs:
           # The importer refuses targets inside the source system.
           bun ../TypedMark/src/cli.ts instantiate . "$RUNNER_TEMP/ci-instance" --name ci-working-notes --schemas ../TypedMarkSpecification/schema/json-schema
           bun ../TypedMark/src/cli.ts validate "$RUNNER_TEMP/ci-instance" --schemas ../TypedMarkSpecification/schema/json-schema --mode instantiated_collection
+
+      - name: Print the notes view of the instance
+        working-directory: TypedMarkExample
+        run: bun ../TypedMark/src/cli.ts view "$RUNNER_TEMP/ci-instance" notes --schemas ../TypedMarkSpecification/schema/json-schema
 
       - name: Require manual resolution without history
         working-directory: TypedMarkExample
