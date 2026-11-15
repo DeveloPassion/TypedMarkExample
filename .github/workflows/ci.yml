@@ -21,14 +21,14 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: DeveloPassion/TypedMark
-          ref: b0badbaac0af733d8c85e091e66ef2ae58ecd981
+          ref: b7d7ff1d7560a16440e0788da0df58aaeab21f1f
           path: TypedMark
 
       - name: Check out specification evidence baseline
         uses: actions/checkout@v4
         with:
           repository: DeveloPassion/TypedMarkSpecification
-          ref: db959fa31f8959dc09688f4904d7e11da46d7b74
+          ref: d2f05918cf05720743092766a8dd962ad0b4f4ec
           path: TypedMarkSpecification
 
       - uses: oven-sh/setup-bun@v2
